@@ -46,10 +46,27 @@ public class HelloControllerMockMvcTest {
 ```java
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class HelloRestControllerFunctionalTest {
+  @Autowired
+  private TestRestTemplate template
   
   @Test
-  public void greetTest(@Autowired TestRestTemplate template) {
+  public void greetObjectTest() {
+    //template.getForObject
+    Greeting response = template.getForObject("/rest?name=Dolly", Greeting.class);
+    assertEquals("Hello, Dolly!", response.message());
 
+  }
+
+  @Test
+  public void greetEntityTest() {
+    //template.getForEntity
+    ResponseEntity<Greeting> entity = template.getForEntity("/rest", Greeting.class);
+    assertEquals(HttpStatus.OK, entity.getStatusCode());
+    assertEquals(MediaType.APPLICATION_JSON, entity.getHeaders().getContentType());
+    Greeting response = entity.getBody();
+    if (response != null) {
+        assertEquals("Hello, World!", response.message());
+    }
   }
 }
 ```
