@@ -42,3 +42,15 @@ public class HelloControllerMockMvcTest {
 }
 ```
 
+## Functional Test
+```java
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public class HelloRestControllerFunctionalTest {
+  
+  @Test
+  public void greetTest(@Autowired TestRestTemplate template) {
+
+  }
+}
+```
+
